@@ -121,5 +121,14 @@ function savePosToStrokes() {
 // Submit button
 $('#submit').click(function () {
     console.log(strokes);
-    clearCanvas();;
+    $.ajax({
+        type: 'POST',
+        url: '/submit',
+        data: JSON.stringify({data: strokes}),
+        contentType: 'application/json;charset=UTF-8',
+        success: function (data) {
+            console.log(data);
+            clearCanvas();
+        }
+    });
 });
