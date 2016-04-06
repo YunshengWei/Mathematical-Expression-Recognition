@@ -1,0 +1,14 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">ISICAL_2014_F32_E220a_4088</annotation>
+<trace id="40">
+650 3, 650 3, 650 3, 650 3, 650 3, 650 3, 650 3, 650 3, 650 3, 650 3, 650 3, 650 3, 650 3, 650 3, 650 3, 652 5, 655 7, 655 7, 655 7, 655 7, 657 11, 657 11, 657 11, 659 16, 661 22, 661 22, 661 22, 661 30, 661 30, 661 30, 661 30, 662 37, 662 44, 662 44, 662 44, 661 48, 661 48, 661 48, 661 48, 660 52, 659 55, 659 55, 659 55, 658 57, 656 59, 656 59, 656 59, 656 59, 654 61, 654 61, 654 61, 652 61, 649 63, 649 63, 649 63, 648 63, 648 63, 648 63, 648 63, 647 64
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="40"/>
+	</traceGroup>
+</traceGroup>
+</ink>

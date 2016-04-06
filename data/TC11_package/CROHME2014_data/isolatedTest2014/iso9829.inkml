@@ -1,0 +1,18 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">IVC_2014_F512_E283_9829</annotation>
+<trace id="1">
+75 214, 64 219, 63 222, 62 227, 60 231, 57 236, 55 241, 53 247, 50 253, 49 258, 48 264, 48 269, 49 273, 52 277, 55 281, 59 284, 65 287, 71 289, 73 290
+</trace>
+<trace id="0">
+22 205, 42 200, 46 201, 50 202, 54 204, 57 206, 59 210, 60 213, 61 217, 62 221, 62 226, 62 231, 61 236, 59 242, 55 248, 51 256, 47 263, 42 270, 37 277, 32 284, 28 290, 24 296, 21 301, 19 304, 19 305
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="1"/>
+		<traceView traceDataRef="0"/>
+	</traceGroup>
+</traceGroup>
+</ink>

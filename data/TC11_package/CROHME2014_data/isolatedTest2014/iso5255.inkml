@@ -1,0 +1,14 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">ISICAL_2014_F35_E9_5255</annotation>
+<trace id="2">
+147 105, 147 105, 147 105, 147 104, 147 104, 147 104, 147 104, 147 104, 148 104, 148 104, 148 104, 148 104, 148 104, 148 104, 148 105, 148 107
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="2"/>
+	</traceGroup>
+</traceGroup>
+</ink>

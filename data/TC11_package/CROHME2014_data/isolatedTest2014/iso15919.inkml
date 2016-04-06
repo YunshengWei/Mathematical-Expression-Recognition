@@ -1,0 +1,14 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">2014_RIT_CROHME_220_15919</annotation>
+<trace id="34">
+877 205, 877 203, 877 208, 877 212, 877 216, 877 220, 877 223, 877 227, 877 230, 877 233, 877 237, 877 240, 877 242, 877 244, 877 245, 877 247, 877 248, 877 250, 877 252
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="34"/>
+	</traceGroup>
+</traceGroup>
+</ink>

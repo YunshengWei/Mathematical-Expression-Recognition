@@ -1,0 +1,22 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">IVC_2014_F511_E259_9461</annotation>
+<trace id="5">
+308 211, 291 225, 286 228, 281 232, 276 235, 272 238, 269 242, 266 244, 264 247, 262 250, 261 252, 261 253
+</trace>
+<trace id="7">
+354 217, 353 242, 353 244, 353 246, 354 247
+</trace>
+<trace id="6">
+333 233, 344 232, 347 232, 350 232, 352 232, 355 232, 357 232, 358 232
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="5"/>
+		<traceView traceDataRef="6"/>
+		<traceView traceDataRef="7"/>
+	</traceGroup>
+</traceGroup>
+</ink>

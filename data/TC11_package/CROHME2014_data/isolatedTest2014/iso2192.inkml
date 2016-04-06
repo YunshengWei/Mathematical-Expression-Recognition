@@ -1,0 +1,14 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">ISICAL_2014_F27_E114_2192</annotation>
+<trace id="7">
+441 228, 441 228, 441 228, 441 228, 441 228, 442 228, 443 228, 443 228, 443 228, 443 228, 446 227, 446 227, 446 227, 446 227, 451 227, 457 226, 457 226, 457 226, 457 226, 457 226, 463 226, 463 226, 468 225, 468 225, 470 224, 470 224, 470 224, 472 224, 472 224, 472 224, 470 224, 470 224, 470 224, 468 224, 466 224
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="7"/>
+	</traceGroup>
+</traceGroup>
+</ink>

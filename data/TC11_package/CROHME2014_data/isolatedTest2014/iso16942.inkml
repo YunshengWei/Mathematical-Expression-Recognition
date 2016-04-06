@@ -1,0 +1,18 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">2014_RIT_CROHME_265_16942</annotation>
+<trace id="46">
+374 186, 377 187, 383 187, 391 187, 398 186, 404 184, 409 183, 413 182, 415 182
+</trace>
+<trace id="47">
+429 161, 430 164, 430 167, 430 173, 430 178, 430 185, 430 189, 431 195, 434 199, 438 201, 444 201, 450 201, 455 196, 458 190, 460 182, 462 177, 462 172, 463 168, 463 165, 463 164, 463 166, 463 170, 463 174, 463 181, 463 187, 463 192, 464 198, 466 201, 469 204, 473 205, 478 205
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="46"/>
+		<traceView traceDataRef="47"/>
+	</traceGroup>
+</traceGroup>
+</ink>

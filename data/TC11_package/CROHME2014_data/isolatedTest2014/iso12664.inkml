@@ -1,0 +1,14 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">IVC_2014_F519_E441_12664</annotation>
+<trace id="10">
+639 127, 633 126, 633 129, 633 132, 634 134, 635 137, 637 140, 640 143, 642 146, 644 149, 646 151, 647 153, 647 155, 646 157, 644 159, 642 161, 638 163, 635 164, 632 165, 630 165, 629 165, 628 165, 628 164, 629 164
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="10"/>
+	</traceGroup>
+</traceGroup>
+</ink>

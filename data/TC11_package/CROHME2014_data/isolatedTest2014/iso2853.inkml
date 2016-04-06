@@ -1,0 +1,14 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">ISICAL_2014_F29_E152_2853</annotation>
+<trace id="1">
+340 244, 340 242, 340 242, 340 242, 340 242, 340 242, 340 242, 340 242, 340 242, 340 242, 340 242, 340 242, 340 242, 340 242, 341 242, 343 242, 346 241, 350 241, 354 241, 359 240, 362 240, 365 240, 367 240, 369 240, 370 240, 371 240, 367 240
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="1"/>
+	</traceGroup>
+</traceGroup>
+</ink>

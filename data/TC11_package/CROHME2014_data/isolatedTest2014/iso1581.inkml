@@ -1,0 +1,14 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">ISICAL_2014_F26_E87_1581</annotation>
+<trace id="28">
+913 100, 913 100, 913 100, 913 100, 913 100, 913 100, 913 100, 913 100, 913 100, 914 100, 914 100, 914 100, 916 100, 917 101, 917 101, 917 101, 918 102, 918 102, 918 102, 918 102, 922 104, 925 108, 925 108, 925 108, 925 108, 925 108, 929 112, 931 116, 931 116, 931 116, 931 121, 931 121, 930 127, 930 127, 927 133, 927 133, 922 138, 922 138, 922 138, 922 138, 916 142, 910 144, 910 144, 910 144, 908 144
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="28"/>
+	</traceGroup>
+</traceGroup>
+</ink>

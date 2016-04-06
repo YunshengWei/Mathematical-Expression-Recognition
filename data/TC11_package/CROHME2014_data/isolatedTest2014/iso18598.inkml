@@ -1,0 +1,14 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+<traceFormat>
+<channel name="X" type="decimal"/>
+<channel name="Y" type="decimal"/>
+</traceFormat><annotation type="UI">2014_RIT_CROHME_66_18598</annotation>
+<trace id="29">
+598 185, 595 183, 592 183, 587 183, 580 183, 574 183, 570 185, 567 188, 564 191, 563 194, 563 196, 563 198, 566 199, 570 199, 575 199, 582 199, 586 195, 590 191, 592 187, 594 183, 595 181, 596 180, 597 180, 597 181, 598 185, 598 191, 599 198, 600 204, 600 209, 601 214, 602 217, 603 218, 604 219
+</trace>
+<traceGroup>
+	<traceGroup xml:id="0">
+		<traceView traceDataRef="29"/>
+	</traceGroup>
+</traceGroup>
+</ink>
