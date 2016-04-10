@@ -44,7 +44,7 @@ def load_int_data(inkml_dir, ink_id_map):
     for inkml_file in glob.glob(DATA_SOURCE + "*.inkml"):
         ink_id, trace_list = load_symbol(inkml_file)
         r = ink_id_map.get(ink_id)
-        if not r:
+        if r is None:
             continue
         X[r, :] = traces2image(trace_list).reshape((1, -1))
     return X
