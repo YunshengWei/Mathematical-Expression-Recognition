@@ -13,7 +13,7 @@
 # limitations under the License.
 # ==============================================================================
 
-"""Builds the CIFAR-10 network.
+"""Builds the network.
 
 Summary of available functions:
 
@@ -45,7 +45,7 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_integer('batch_size', 128,
                             """Number of images to process in a batch.""")
 
-# Global constants describing the CIFAR-10 data set.
+# Global constants describing the data set.
 IMAGE_SIZE = 'todo'  # todo
 NUM_CLASSES = 'todo'  # todo
 NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 'todo'  # todo
@@ -122,7 +122,7 @@ def _variable_with_weight_decay(name, shape, stddev, wd):
 
 
 def inference(images):
-    """Build the CIFAR-10 model.
+    """Build the model.
 
     Args:
       images: Images returned from distorted_inputs() or inputs().
@@ -225,7 +225,7 @@ def loss(logits, labels):
 
 
 def _add_loss_summaries(total_loss):
-    """Add summaries for losses in CIFAR-10 model.
+    """Add summaries for losses in model.
 
     Generates moving average for all losses and associated summaries for
     visualizing the performance of the network.
@@ -252,7 +252,7 @@ def _add_loss_summaries(total_loss):
 
 
 def train(total_loss, global_step):
-    """Train CIFAR-10 model.
+    """Train model.
 
     Create an optimizer and apply to all trainable variables. Add moving
     average for all trainable variables.
