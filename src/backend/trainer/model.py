@@ -46,10 +46,8 @@ tf.app.flags.DEFINE_integer('batch_size', 128,
                             """Number of images to process in a batch.""")
 
 # Global constants describing the data set.
-IMAGE_SIZE = 'todo'  # todo
 NUM_CLASSES = 'todo'  # todo
 NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 'todo'  # todo
-NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 'todo'  # todo
 
 # Constants describing the training process.
 MOVING_AVERAGE_DECAY = 0.9999  # The decay to use for the moving average.
