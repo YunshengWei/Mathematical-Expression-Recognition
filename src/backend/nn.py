@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+BATCH_SIZE = 500
+NUMBER_OF_CLASSES = 100
+
 
 def _variable_on_cpu(name, shape, initializer):
     with tf.device('/cpu:0'):
@@ -16,6 +19,12 @@ def _variable_with_weight_decay(name, shape, stddev, wd):
 
 
 def get_network(images, batch_size, number_of_classes):
+    """
+    :param images: 4D tensor of [batch_size, IMAGE_SIZE, IMAGE_SIZE, 3] size.
+    :param batch_size: Batch size
+    :param number_of_classes: Number of classes
+    :return:
+    """
     # conv1
     kernel = _variable_with_weight_decay('weights', shape=[5, 5, 3, 64], stddev=1e-4, wd=0.0)
     conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
@@ -61,3 +70,18 @@ def get_network(images, batch_size, number_of_classes):
     softmax_linear = tf.add(tf.matmul(local4, weights), biases, name='softmax_linear')
 
     return softmax_linear
+
+
+def loss(network, labels):
+    return None  # todo
+
+
+if __name__ == '__main__':
+    # todo: get images and labels
+    images, labels = None, None
+
+    network = get_network(images, BATCH_SIZE, NUMBER_OF_CLASSES)
+
+    loss = loss(network, labels)
+
+    # todo: train in batches...
