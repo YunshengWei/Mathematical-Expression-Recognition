@@ -35,10 +35,6 @@ tf.app.flags.DEFINE_integer('max_steps', 1000000,
 tf.app.flags.DEFINE_boolean('log_device_placement', False,
                             """Whether to log device placement.""")
 
-if tf.gfile.Exists(FLAGS.train_dir):
-    tf.gfile.DeleteRecursively(FLAGS.train_dir)
-tf.gfile.MakeDirs(FLAGS.train_dir)
-
 """Train for a number of steps."""
 with tf.Graph().as_default():
     global_step = tf.Variable(0, trainable=False)
@@ -77,7 +73,7 @@ with tf.Graph().as_default():
 
     summary_writer = tf.train.SummaryWriter(FLAGS.train_dir, sess.graph)
 
-    for step in xrange(FLAGS.max_steps):
+    for step in range(0, FLAGS.max_steps):
         start_time = time.time()
         _, loss_value = sess.run([train_op, loss])
         duration = time.time() - start_time
@@ -105,4 +101,7 @@ with tf.Graph().as_default():
 
 
 if __name__ == '__main__':
+    if tf.gfile.Exists(FLAGS.train_dir):
+        tf.gfile.DeleteRecursively(FLAGS.train_dir)
+    tf.gfile.MakeDirs(FLAGS.train_dir)
     tf.app.run()
