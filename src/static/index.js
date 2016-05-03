@@ -128,6 +128,7 @@ $('#submit').click(function () {
         contentType: 'application/json;charset=UTF-8',
         success: function (data) {
             $('#latex').text('$' + data['latex'] + '$');
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
             clearCanvas();
         }
     });
