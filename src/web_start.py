@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 app.debug = True
+from char_seq_to_latex import char_seq_to_latex
 
 
 @app.route('/')
@@ -15,8 +16,10 @@ def get_resources(path):
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    print request.json['data']
-    return jsonify(success=True)
+    traces = request.json['data']
+    char_seq = [{'char': 'x', 'pos': (0, 0)}, {'char': '=', 'pos': (0, 0)}, {'char': '5', 'pos': (0, 0)}]
+    latex = char_seq_to_latex(char_seq)
+    return jsonify({'latex': latex})
 
 if __name__ == '__main__':
     app.run()

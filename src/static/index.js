@@ -127,7 +127,7 @@ $('#submit').click(function () {
         data: JSON.stringify({data: strokes}),
         contentType: 'application/json;charset=UTF-8',
         success: function (data) {
-            console.log(data);
+            $('#latex').text('$' + data['latex'] + '$');
             clearCanvas();
         }
     });
