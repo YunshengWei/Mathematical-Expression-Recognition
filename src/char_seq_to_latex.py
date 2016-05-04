@@ -75,8 +75,11 @@ def horizontal_positioning(input_tex_lets):
     :param input_tex_lets: [TexLet]
     :return: [TexLet]
     """
-    res = reduce(lambda prev, cur: str(prev) + str(cur), input_tex_lets, SimpleTexLet('', {}))
-    return SimpleTexLet(res, {})
+    if len(input_tex_lets) == 0:
+        return SimpleTexLet('', {})
+    else:
+        res = reduce(lambda prev, cur: str(prev) + str(cur), input_tex_lets, SimpleTexLet('', {}))
+        return SimpleTexLet(res, {})
 
 
 FRACTION = '\\frac'
@@ -96,31 +99,31 @@ def fraction_positioning(input_tex_lets):
         fractions.sort(longer_fraction)
         fraction = fractions[len(fractions) - 1]
 
-        # find TexLets to left of that
+        # find and evaluate TexLets to left of that
         def to_left(t):
             return t.extra['right'] < fraction.extra['left']
-        left = filter(to_left, input_tex_lets)
+        left = heuristic_evaluate(filter(to_left, input_tex_lets))
 
-        # find TexLets to right of that
+        # find and evaluate TexLets to right of that
         def to_right(t):
             return fraction.extra['right'] < t.extra['left']
-        right = filter(to_right, input_tex_lets)
+        right = heuristic_evaluate(filter(to_right, input_tex_lets))
 
-        # find TexLets above that
+        # find and evaluate TexLets above that
         def inbound(t):
             return not to_left(t) and not to_right(t)
 
         def to_above(t):
             return inbound(t) and t.extra['lower'] <= fraction.extra['upper']
-        above_tex_let = heuristic_evaluate(filter(to_above, input_tex_lets))
+        above = heuristic_evaluate(filter(to_above, input_tex_lets))
 
-        # find TexLets below that
+        # find and evaluate TexLets below that
         def to_below(t):
             return inbound(t) and fraction.extra['lower'] <= t.extra['upper']
-        below_tex_let = heuristic_evaluate(filter(to_below, input_tex_lets))
+        below = heuristic_evaluate(filter(to_below, input_tex_lets))
 
         # Construct
-        return left + [FractionTexLet(above_tex_let, below_tex_let, fraction.extra)] + right
+        return [left, FractionTexLet(above, below, fraction.extra), right]
     else:
         return input_tex_lets
 
