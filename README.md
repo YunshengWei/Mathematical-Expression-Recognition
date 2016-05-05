@@ -2,7 +2,7 @@
 
 ## Install
 ```
-pip install -r requirements.txt
+pip install Flask
 ```
 
 ## Start web frontend
