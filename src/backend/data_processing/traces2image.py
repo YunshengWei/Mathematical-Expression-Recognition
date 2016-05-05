@@ -1,10 +1,12 @@
-import numpy as np
 from itertools import chain
+
+import numpy as np
 from scipy.misc import imresize
 
-IMAGE_WIDTH = 30
-IMAGE_HEIGHT = 30
-IMAGE_PADDING = 3
+IMAGE_SIZE = 28
+IMAGE_PADDING = 0
+CENTER_HEIGHT = IMAGE_SIZE - 2 * IMAGE_PADDING
+CENTER_WIDTH = IMAGE_SIZE - 2 * IMAGE_PADDING
 
 
 def traces2image(traces):
@@ -45,25 +47,25 @@ def traces2image(traces):
         right_padding = height - width - left_padding
         image = np.hstack([np.zeros((height, left_padding)), image, np.zeros((height, right_padding))])
 
-    image = imresize(image, (IMAGE_HEIGHT, IMAGE_WIDTH), 'bilinear')
-    #image[image > 0] = 255
-    image = np.vstack([np.zeros((IMAGE_PADDING, 2 * IMAGE_PADDING + IMAGE_WIDTH)),
-        np.hstack([np.zeros((IMAGE_HEIGHT, IMAGE_PADDING)), image, np.zeros((IMAGE_HEIGHT, IMAGE_PADDING))]),
-        np.zeros((IMAGE_PADDING, 2 * IMAGE_PADDING + IMAGE_WIDTH))])
+    image = imresize(image, (CENTER_HEIGHT, CENTER_WIDTH), 'bilinear')
+    image = np.vstack([np.zeros((IMAGE_PADDING, IMAGE_SIZE)),
+                       np.hstack([np.zeros((CENTER_HEIGHT, IMAGE_PADDING)), image, np.zeros((CENTER_HEIGHT, IMAGE_PADDING))]),
+                       np.zeros((IMAGE_PADDING, IMAGE_SIZE))])
 
+    image = image.astype('float64') / 255.0
     return image
 
 
 if __name__ == "__main__":
-    from prepare_data import load_symbol, DATA_SOURCE, load_ground_truth, GT_FILE
+    from src.backend.data_processing.prepare_data import load_symbol, DATA_SOURCE, load_ground_truth, GT_FILE
     import matplotlib.pyplot as plt
     y, symbol_set, ink_id_map = load_ground_truth(DATA_SOURCE + GT_FILE)
-    for i in xrange(2050, 2150):
+    for i in xrange(5020, 5100):
         a,b = load_symbol(DATA_SOURCE + 'iso%s.inkml' % i)
         j = ink_id_map.get(a)
         c = traces2image(b)
         if j != None:
-            print i, y[j], np.max(c)
+            print i, y[j]
         plt.imshow(c, cmap='gray')
         plt.show()
         #plt.close()
