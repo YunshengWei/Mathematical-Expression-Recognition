@@ -119,7 +119,7 @@ function savePosToStrokes() {
     lastPos = pos;
 })();
 
-// Submit
+// submit
 function submit() {
     console.log(strokes);
     $.ajax({
@@ -133,3 +133,8 @@ function submit() {
         }
     });
 }
+
+// clear button
+$('#clear').click(function () {
+    clearCanvas()
+});
