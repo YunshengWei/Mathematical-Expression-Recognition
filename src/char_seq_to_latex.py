@@ -70,13 +70,55 @@ class FractionTexLet(TexLet):
         self.insert('denominator', denominator)
 
 
+class SuperscriptTexLet(TexLet):
+    def __init__(self, base, super, extra):
+        TexLet.__init__(self,
+                        template='^{}',
+                        insertion_points={'base': -1, 'super': 1},
+                        extra=extra)
+        self.insert('base', base)
+        self.insert('super', super)
+
+
+def most_upper(tex_lets):
+    if len(tex_lets) == 0:
+        return -1
+    return min(map(lambda t: t.extra['upper'], tex_lets))
+
+
+def most_lower(tex_lets):
+    if len(tex_lets) == 0:
+        return -1
+    return max(map(lambda t: t.extra['lower'], tex_lets))
+
+
+def most_left(tex_lets):
+    if len(tex_lets) == 0:
+        return -1
+    return min(map(lambda t: t.extra['left'], tex_lets))
+
+
+def most_right(tex_lets):
+    if len(tex_lets) == 0:
+        return -1
+    return max(map(lambda t: t.extra['right'], tex_lets))
+
+
+def box(tex_lets):
+    return {'lower': most_lower(tex_lets),
+            'upper': most_upper(tex_lets),
+            'left': most_left(tex_lets),
+            'right': most_right(tex_lets)
+            }
+
+
 def horizontal_positioning(input_tex_lets):
     """
     :param input_tex_lets: [TexLet]
     :return: [TexLet]
     """
     res = reduce(lambda prev, cur: str(prev) + str(cur), input_tex_lets, '')
-    return SimpleTexLet(res, {})
+    return SimpleTexLet(res, box(input_tex_lets))
 
 
 FRACTION = '\\frac'
@@ -98,12 +140,12 @@ def fraction_positioning(input_tex_lets):
 
         # find and evaluate TexLets to left of that
         def to_left(t):
-            return t.extra['right'] < fraction.extra['left']
+            return t.extra['right'] <= fraction.extra['left']
         left = heuristic_evaluate(filter(to_left, input_tex_lets))
 
         # find and evaluate TexLets to right of that
         def to_right(t):
-            return fraction.extra['right'] < t.extra['left']
+            return fraction.extra['right'] <= t.extra['left']
         right = heuristic_evaluate(filter(to_right, input_tex_lets))
 
         # find and evaluate TexLets above that
@@ -112,15 +154,80 @@ def fraction_positioning(input_tex_lets):
 
         def to_above(t):
             return inbound(t) and t.extra['lower'] <= fraction.extra['upper']
-        above = heuristic_evaluate(filter(to_above, input_tex_lets))
+        above_lets = filter(to_above, input_tex_lets)
+        new_upper = most_upper(above_lets)
+        above = heuristic_evaluate(above_lets)
 
         # find and evaluate TexLets below that
         def to_below(t):
             return inbound(t) and fraction.extra['lower'] <= t.extra['upper']
-        below = heuristic_evaluate(filter(to_below, input_tex_lets))
+        below_lets = filter(to_below, input_tex_lets)
+        new_lower = most_lower(below_lets)
+        below = heuristic_evaluate(below_lets)
 
         # Construct
+        fraction.extra['upper'] = new_upper
+        fraction.extra['lower'] = new_lower
         return [left, FractionTexLet(above, below, fraction.extra), right]
+    else:
+        return input_tex_lets
+
+
+SUPERSCRIPT_DIFF = 10
+
+
+def superscript_positioning(input_tex_lets):
+    """
+    :param input_tex_lets: [TexLet]
+    :return: [TexLet]
+    """
+    # find center lines
+    centers = map(lambda t: t.extra['upper'] + (t.extra['lower'] - t.extra['upper']) / float(2), input_tex_lets)
+
+    if len(centers) > 0:
+        # try to find a hill
+        base_center = centers[0]
+        base_end = len(centers) - 1
+        super_center = 1
+        finding_super = False
+
+        for index, pos in enumerate(centers):
+            if finding_super:
+                if super_center - pos >= SUPERSCRIPT_DIFF:
+                    # base
+                    base_input_lets = input_tex_lets[:base_end + 1]
+                    base = heuristic_evaluate(base_input_lets)
+
+                    # super
+                    super_input_lets = input_tex_lets[base_end + 1: index]
+                    super = heuristic_evaluate(super_input_lets)
+
+                    # the rest
+                    the_rest = heuristic_evaluate(input_tex_lets[index:])
+
+                    # construct
+                    new_box = box(base_input_lets + super_input_lets)
+                    return [SuperscriptTexLet(base, super, new_box)] + the_rest
+            else:
+                if base_center - pos >= SUPERSCRIPT_DIFF:
+                    base_end = index - 1
+                    super_center = pos
+                    finding_super = True
+
+        if not finding_super:
+            return input_tex_lets
+        else:
+            # base
+            base_input_lets = input_tex_lets[:base_end + 1]
+            base = heuristic_evaluate(base_input_lets)
+
+            # super
+            super_input_lets = input_tex_lets[base_end + 1:]
+            super = heuristic_evaluate(super_input_lets)
+
+            # construct
+            return [SuperscriptTexLet(base, super, box(input_tex_lets))]
+
     else:
         return input_tex_lets
 
@@ -131,7 +238,8 @@ def heuristic_evaluate(tex_lets):
     :return: TexLet
     """
     from_fraction = fraction_positioning(tex_lets)
-    from_horizontal = horizontal_positioning(from_fraction)
+    from_superscript = superscript_positioning(from_fraction)
+    from_horizontal = horizontal_positioning(from_superscript)
     return from_horizontal
 
 
@@ -146,7 +254,21 @@ def char_seq_to_latex(char_seq):
     return str(res_tex_let)
 
 if __name__ == '__main__':
-    x = {'char': 'x', 'pos': {'upper': 0, 'lower': 1, 'left': 0, 'right': 1}}
-    over = {'char': '\\frac', 'pos': {'upper': 1.5, 'lower': 2, 'left': 0, 'right': 1}}
-    five = {'char': '5', 'pos': {'upper': 2.5, 'lower': 3, 'left': 0, 'right': 1}}
-    print char_seq_to_latex([x, over, five])
+    one = {'char': '1', 'pos': {'upper': 1.5, 'lower': 2, 'left': 0, 'right': 0.5}}
+    plus = {'char': '+', 'pos': {'upper': 1.5, 'lower': 2, 'left': 0.5, 'right': 1}}
+    x = {'char': 'x', 'pos': {'upper': 0, 'lower': 1, 'left': 1, 'right': 2}}
+    over = {'char': '\\frac', 'pos': {'upper': 1.5, 'lower': 2, 'left': 1, 'right': 2}}
+    five = {'char': '5', 'pos': {'upper': 2.5, 'lower': 3, 'left': 1, 'right': 2}}
+    minus = {'char': '-', 'pos': {'upper': 1.5, 'lower': 2, 'left': 2, 'right': 2.5}}
+    y = {'char': 'y', 'pos': {'upper': 1.5, 'lower': 2, 'left': 2.5, 'right': 3}}
+    print char_seq_to_latex([one, plus, x, over, five, minus, y])
+
+    a = {'char': 'a', 'pos': {'upper': 20, 'lower': 21, 'left': 0, 'right': 1}}
+    b = {'char': 'b', 'pos': {'upper': 0, 'lower': 1, 'left': 1, 'right': 1.5}}
+    plus = {'char': '+', 'pos': {'upper': 0, 'lower': 1, 'left': 1.5, 'right': 2}}
+    c = {'char': 'c', 'pos': {'upper': 0, 'lower': 1, 'left': 2, 'right': 2.5}}
+    print char_seq_to_latex([a, b, plus, c])
+
+
+
+
