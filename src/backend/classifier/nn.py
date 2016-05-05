@@ -1,7 +1,13 @@
+from __future__ import division
+
+import math
 import tensorflow as tf
+from src.backend.data_processing.traces2image import IMAGE_SIZE
+
+NUM_CLASSES = 100
+IMAGE_PIXELS = IMAGE_SIZE * IMAGE_SIZE
 
 BATCH_SIZE = 500
-NUMBER_OF_CLASSES = 100
 
 
 def _variable_on_cpu(name, shape, initializer):
@@ -80,7 +86,7 @@ if __name__ == '__main__':
     # todo: get images and labels
     images, labels = None, None
 
-    network = get_network(images, BATCH_SIZE, NUMBER_OF_CLASSES)
+    network = get_network(images, BATCH_SIZE, NUM_CLASSES)
 
     loss = loss(network, labels)
 
