@@ -108,6 +108,7 @@ function savePosToStrokes() {
         currentStroke.push(pos);
     } else if (currentStroke.length !== 0) {
         strokes.push(currentStroke);
+        submit();
         currentStroke = [];
     }
 }
@@ -118,8 +119,8 @@ function savePosToStrokes() {
     lastPos = pos;
 })();
 
-// Submit button
-$('#submit').click(function () {
+// Submit
+function submit() {
     console.log(strokes);
     $.ajax({
         type: 'POST',
@@ -129,7 +130,6 @@ $('#submit').click(function () {
         success: function (data) {
             $('#latex').text('$' + data['latex'] + '$');
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-            clearCanvas();
         }
     });
-});
+}
