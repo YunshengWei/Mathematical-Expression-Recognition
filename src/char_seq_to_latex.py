@@ -75,11 +75,8 @@ def horizontal_positioning(input_tex_lets):
     :param input_tex_lets: [TexLet]
     :return: [TexLet]
     """
-    if len(input_tex_lets) == 0:
-        return SimpleTexLet('', {})
-    else:
-        res = reduce(lambda prev, cur: str(prev) + str(cur), input_tex_lets, SimpleTexLet('', {}))
-        return SimpleTexLet(res, {})
+    res = reduce(lambda prev, cur: str(prev) + str(cur), input_tex_lets, '')
+    return SimpleTexLet(res, {})
 
 
 FRACTION = '\\frac'
