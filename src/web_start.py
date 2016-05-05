@@ -17,9 +17,10 @@ def get_resources(path):
 @app.route('/submit', methods=['POST'])
 def submit():
     traces = request.json['data']
-    char_seq = [{'char': 'x', 'pos': (0, 0)}, {'char': '=', 'pos': (0, 0)}, {'char': '5', 'pos': (0, 0)}]
-    latex = char_seq_to_latex(char_seq)
-    return jsonify({'latex': latex})
+    print traces
+    # char_seq = [{'char': 'x', 'pos': (0, 0)}, {'char': '=', 'pos': (0, 0)}, {'char': '5', 'pos': (0, 0)}]
+    # latex = char_seq_to_latex(char_seq)
+    return jsonify({'latex': 'E=mc^2'})
 
 if __name__ == '__main__':
     app.run()
