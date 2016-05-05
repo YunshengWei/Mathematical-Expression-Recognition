@@ -103,7 +103,7 @@ def load_model(save_path):
 
         def predict(self, images):
             """
-            images: [N * IMAGE_SIZE * IMAGE_SIZE, 1]
+            images: [N, IMAGE_SIZE * IMAGE_SIZE]
             """
             images = images.reshape(-1, IMAGE_SIZE, IMAGE_SIZE, 1)
             return self.sess.run(self.recognize, feed_dict={self.x: images})
