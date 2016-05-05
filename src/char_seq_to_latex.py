@@ -80,6 +80,15 @@ class SuperscriptTexLet(TexLet):
         self.insert('super', super)
 
 
+class SquareRootTexLet(TexLet):
+    def __init__(self, inner, extra):
+        TexLet.__init__(self,
+                        template='\\sqrt{}',
+                        insertion_points={'inner': 5},
+                        extra=extra)
+        self.insert('inner', inner)
+
+
 def most_upper(tex_lets):
     if len(tex_lets) == 0:
         return -1
@@ -232,6 +241,45 @@ def superscript_positioning(input_tex_lets):
         return input_tex_lets
 
 
+SQUARE_ROOT = '\\sqrt'
+
+
+def square_root_positioning(input_tex_lets):
+    """
+    :param input_tex_lets: [TexLet]
+    :return: [TexLet]
+    """
+    square_roots = filter(lambda l: l.template == SQUARE_ROOT, input_tex_lets)
+
+    if len(square_roots) != 0:
+        # find biggest square root
+        def bigger_square_root(x, y):
+            return x.extra['upper'] < y.extra['upper'] and y.extra['lower'] < x.extra['lower'] \
+                   and x.extra['left'] < y.extra['left'] and y.extra['right'] < x.extra['right']
+        square_roots.sort(bigger_square_root)
+        square_root = square_roots[len(square_roots) - 1]
+
+        # find and evaluate TexLets to left of that
+        def to_left(t):
+            return t.extra['right'] <= square_root.extra['left']
+        left = heuristic_evaluate(filter(to_left, input_tex_lets))
+
+        # find and evaluate TexLets to right of that
+        def to_right(t):
+            return square_root.extra['right'] <= t.extra['left']
+        right = heuristic_evaluate(filter(to_right, input_tex_lets))
+
+        # find and evaluate TexLets inside that
+        def inbound(t):
+            return not to_left(t) and not to_right(t) and t.template != SQUARE_ROOT
+        inner = heuristic_evaluate(filter(inbound, input_tex_lets))
+
+        # Construct
+        return [left, SquareRootTexLet(inner, square_root.extra), right]
+    else:
+        return input_tex_lets
+
+
 def heuristic_evaluate(tex_lets):
     """
     :param tex_lets: [TexLet]
@@ -239,7 +287,8 @@ def heuristic_evaluate(tex_lets):
     """
     from_fraction = fraction_positioning(tex_lets)
     from_superscript = superscript_positioning(from_fraction)
-    from_horizontal = horizontal_positioning(from_superscript)
+    from_square_root = square_root_positioning(from_superscript)
+    from_horizontal = horizontal_positioning(from_square_root)
     return from_horizontal
 
 
@@ -268,6 +317,11 @@ if __name__ == '__main__':
     plus = {'char': '+', 'pos': {'upper': 0, 'lower': 1, 'left': 1.5, 'right': 2}}
     c = {'char': 'c', 'pos': {'upper': 0, 'lower': 1, 'left': 2, 'right': 2.5}}
     print char_seq_to_latex([a, b, plus, c])
+
+    sqrt = {'char': '\\sqrt', 'pos': {'upper': 0, 'lower': 2, 'left': 0, 'right': 5}}
+    p = {'char': 'p', 'pos': {'upper': 1, 'lower': 1.5, 'left': 1, 'right': 2}}
+    q = {'char': 'q', 'pos': {'upper': 1, 'lower': 1.5, 'left': 3, 'right': 4}}
+    print char_seq_to_latex([sqrt, p, q])
 
 
 
