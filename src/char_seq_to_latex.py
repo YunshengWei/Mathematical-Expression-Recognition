@@ -1,3 +1,8 @@
+FRACTION = '-'
+SUPERSCRIPT_DIFF = 10
+SQUARE_ROOT = '\\sqrt'
+
+
 class TexLet(object):
     """
     A TexLet is a string of Latex with custom named insertion points
@@ -130,9 +135,6 @@ def horizontal_positioning(input_tex_lets):
     return SimpleTexLet(res, box(input_tex_lets))
 
 
-FRACTION = '\\frac'
-
-
 def fraction_positioning(input_tex_lets):
     """
     :param input_tex_lets: [TexLet]
@@ -180,9 +182,6 @@ def fraction_positioning(input_tex_lets):
         return [left, FractionTexLet(above, below, fraction.extra), right]
     else:
         return input_tex_lets
-
-
-SUPERSCRIPT_DIFF = 10
 
 
 def superscript_positioning(input_tex_lets):
@@ -239,9 +238,6 @@ def superscript_positioning(input_tex_lets):
 
     else:
         return input_tex_lets
-
-
-SQUARE_ROOT = '\\sqrt'
 
 
 def square_root_positioning(input_tex_lets):
@@ -306,7 +302,7 @@ if __name__ == '__main__':
     one = {'char': '1', 'pos': {'upper': 1.5, 'lower': 2, 'left': 0, 'right': 0.5}}
     plus = {'char': '+', 'pos': {'upper': 1.5, 'lower': 2, 'left': 0.5, 'right': 1}}
     x = {'char': 'x', 'pos': {'upper': 0, 'lower': 1, 'left': 1, 'right': 2}}
-    over = {'char': '\\frac', 'pos': {'upper': 1.5, 'lower': 2, 'left': 1, 'right': 2}}
+    over = {'char': '-', 'pos': {'upper': 1.5, 'lower': 2, 'left': 1, 'right': 2}}
     five = {'char': '5', 'pos': {'upper': 2.5, 'lower': 3, 'left': 1, 'right': 2}}
     minus = {'char': '-', 'pos': {'upper': 1.5, 'lower': 2, 'left': 2, 'right': 2.5}}
     y = {'char': 'y', 'pos': {'upper': 1.5, 'lower': 2, 'left': 2.5, 'right': 3}}

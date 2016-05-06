@@ -12,7 +12,7 @@ from src.backend.data_processing.traces2image import IMAGE_SIZE
 NUM_CLASSES = 101
 WEIGHT_DECAY = 0
 LEARNING_RATE = 1e-3
-NUM_EPOCHES = 100
+NUM_EPOCHES = 70
 BATCH_SIZE = 500
 
 
@@ -117,6 +117,8 @@ if __name__ == "__main__":
     train, val, test = CROHME['train'], CROHME['val'], CROHME['test']
     train, val, test = map(lambda x: (x[0].reshape((-1, IMAGE_SIZE, IMAGE_SIZE, 1)), x[1]),
                            [train, val, test])
+
+    train = np.vstack((train[0], val[0], test[0])), np.vstack((train[1], val[1], test[1]))
 
     x = tf.placeholder(tf.float32, shape=[None, IMAGE_SIZE, IMAGE_SIZE, 1])
     y_ = tf.placeholder(tf.float32, shape=[None, NUM_CLASSES])

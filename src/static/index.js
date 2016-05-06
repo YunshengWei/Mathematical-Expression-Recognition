@@ -136,5 +136,6 @@ function submit() {
 
 // clear button
 $('#clear').click(function () {
-    clearCanvas()
+    clearCanvas();
+    submit();
 });

@@ -10,7 +10,7 @@ from src.backend.classifier.convnet import load_model
 from src.backend.data_processing.traces2image import traces2image, IMAGE_SIZE
 
 
-DIST_THRES = 10
+DIST_THRES = 60
 
 
 app = Flask(__name__)
@@ -34,7 +34,7 @@ def intersect(trace1, trace2):
 def segment_traces(traces):
     last_trace = traces[-1]
     ts = [last_trace]
-    for trace in reversed(ts[:-1]):
+    for trace in reversed(traces[:-1]):
         if not intersect(last_trace, trace):
             break
         ts.append(trace)
@@ -47,6 +47,7 @@ with open('data/prepared_data/CROHME.pkl', 'rb') as f:
 num2sym = CROHME['num2sym']
 classifier = load_model("models/convnet/convnet.ckpt")
 
+sym_seq = []
 
 @app.route('/')
 def root():
@@ -60,20 +61,25 @@ def get_resources(path):
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    global sym_seq
     traces = request.json['data']
-    print traces
     traces = map(reformat_trace, traces)
     print traces
+    if not traces:
+        sym_seq = []
+    else:
+        ts = segment_traces(traces)
+        if len(ts) > 1:
+            sym_seq.pop()
+        image = traces2image(ts)
+        label = num2sym[classifier.predict(image)[0]]
 
-    ts = segment_traces(traces)
-    image = traces2image(ts)
-    label = num2sym[classifier.predict(image)[0]]
+        x_list, y_list = zip(*itertools.chain.from_iterable(traces))
+        x_min, x_max, y_min, y_max = min(x_list), max(x_list), min(y_list), max(y_list)
+        sym_seq.append({"char": label, "pos": {"upper": y_min, "lower": y_max, "left": x_min, "right": x_max}})
 
-
-
-    # char_seq = [{'char': 'x', 'pos': (0, 0)}, {'char': '=', 'pos': (0, 0)}, {'char': '5', 'pos': (0, 0)}]
-    # latex = char_seq_to_latex(char_seq)
-    return jsonify({'latex': 'E=mc^2'})
+    latex = char_seq_to_latex(sym_seq)
+    return jsonify({'latex': latex})
 
 if __name__ == '__main__':
     app.run()
