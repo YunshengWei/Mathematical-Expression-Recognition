@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import cPickle as pickle
+import copy
 import math
 import itertools
 from char_seq_to_latex import char_seq_to_latex
@@ -64,7 +65,6 @@ def submit():
     global sym_seq
     traces = request.json['data']
     traces = map(reformat_trace, traces)
-    print traces
     if not traces:
         sym_seq = []
     else:
@@ -74,11 +74,12 @@ def submit():
         image = traces2image(ts)
         label = num2sym[classifier.predict(image)[0]]
 
-        x_list, y_list = zip(*itertools.chain.from_iterable(traces))
+        x_list, y_list = zip(*itertools.chain.from_iterable(ts))
         x_min, x_max, y_min, y_max = min(x_list), max(x_list), min(y_list), max(y_list)
         sym_seq.append({"char": label, "pos": {"upper": y_min, "lower": y_max, "left": x_min, "right": x_max}})
+        print sym_seq
 
-    latex = char_seq_to_latex(sym_seq)
+    latex = char_seq_to_latex(copy.deepcopy(sym_seq))
     return jsonify({'latex': latex})
 
 if __name__ == '__main__':

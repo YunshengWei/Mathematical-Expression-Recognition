@@ -161,7 +161,7 @@ def fraction_positioning(input_tex_lets):
 
         # find and evaluate TexLets above that
         def inbound(t):
-            return not to_left(t) and not to_right(t)
+            return not to_left(t) and not to_right(t) and t.template != FRACTION
 
         def to_above(t):
             return inbound(t) and t.extra['lower'] <= fraction.extra['upper']
@@ -299,25 +299,28 @@ def char_seq_to_latex(char_seq):
     return str(res_tex_let)
 
 if __name__ == '__main__':
-    one = {'char': '1', 'pos': {'upper': 1.5, 'lower': 2, 'left': 0, 'right': 0.5}}
-    plus = {'char': '+', 'pos': {'upper': 1.5, 'lower': 2, 'left': 0.5, 'right': 1}}
-    x = {'char': 'x', 'pos': {'upper': 0, 'lower': 1, 'left': 1, 'right': 2}}
-    over = {'char': '-', 'pos': {'upper': 1.5, 'lower': 2, 'left': 1, 'right': 2}}
-    five = {'char': '5', 'pos': {'upper': 2.5, 'lower': 3, 'left': 1, 'right': 2}}
-    minus = {'char': '-', 'pos': {'upper': 1.5, 'lower': 2, 'left': 2, 'right': 2.5}}
-    y = {'char': 'y', 'pos': {'upper': 1.5, 'lower': 2, 'left': 2.5, 'right': 3}}
-    print char_seq_to_latex([one, plus, x, over, five, minus, y])
+    # one = {'char': '1', 'pos': {'upper': 1.5, 'lower': 2, 'left': 0, 'right': 0.5}}
+    # plus = {'char': '+', 'pos': {'upper': 1.5, 'lower': 2, 'left': 0.5, 'right': 1}}
+    # x = {'char': 'x', 'pos': {'upper': 0, 'lower': 1, 'left': 1, 'right': 2}}
+    # over = {'char': '-', 'pos': {'upper': 1.5, 'lower': 2, 'left': 1, 'right': 2}}
+    # five = {'char': '5', 'pos': {'upper': 2.5, 'lower': 3, 'left': 1, 'right': 2}}
+    # minus = {'char': '-', 'pos': {'upper': 1.5, 'lower': 2, 'left': 2, 'right': 2.5}}
+    # y = {'char': 'y', 'pos': {'upper': 1.5, 'lower': 2, 'left': 2.5, 'right': 3}}
+    # print char_seq_to_latex([one, plus, x, over, five, minus, y])
+    #
+    # a = {'char': 'a', 'pos': {'upper': 20, 'lower': 21, 'left': 0, 'right': 1}}
+    # b = {'char': 'b', 'pos': {'upper': 0, 'lower': 1, 'left': 1, 'right': 1.5}}
+    # plus = {'char': '+', 'pos': {'upper': 0, 'lower': 1, 'left': 1.5, 'right': 2}}
+    # c = {'char': 'c', 'pos': {'upper': 0, 'lower': 1, 'left': 2, 'right': 2.5}}
+    # print char_seq_to_latex([a, b, plus, c])
+    #
+    # sqrt = {'char': '\\sqrt', 'pos': {'upper': 0, 'lower': 2, 'left': 0, 'right': 5}}
+    # p = {'char': 'p', 'pos': {'upper': 1, 'lower': 1.5, 'left': 1, 'right': 2}}
+    # q = {'char': 'q', 'pos': {'upper': 1, 'lower': 1.5, 'left': 3, 'right': 4}}
+    # print char_seq_to_latex([sqrt, p, q])
+    raw = [{'char': '1', 'pos': {'upper': 16, 'lower': 54, 'right': 61, 'left': 61}}, {'char': '-', 'pos': {'upper': -1, 'lower': -1, 'right': 92, 'left': 28}}, {'char': '2', 'pos': {'upper': 16, 'lower': 144, 'right': 92, 'left': 28}}]
+    char_seq_to_latex(raw)
 
-    a = {'char': 'a', 'pos': {'upper': 20, 'lower': 21, 'left': 0, 'right': 1}}
-    b = {'char': 'b', 'pos': {'upper': 0, 'lower': 1, 'left': 1, 'right': 1.5}}
-    plus = {'char': '+', 'pos': {'upper': 0, 'lower': 1, 'left': 1.5, 'right': 2}}
-    c = {'char': 'c', 'pos': {'upper': 0, 'lower': 1, 'left': 2, 'right': 2.5}}
-    print char_seq_to_latex([a, b, plus, c])
-
-    sqrt = {'char': '\\sqrt', 'pos': {'upper': 0, 'lower': 2, 'left': 0, 'right': 5}}
-    p = {'char': 'p', 'pos': {'upper': 1, 'lower': 1.5, 'left': 1, 'right': 2}}
-    q = {'char': 'q', 'pos': {'upper': 1, 'lower': 1.5, 'left': 3, 'right': 4}}
-    print char_seq_to_latex([sqrt, p, q])
 
 
 
